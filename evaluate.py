@@ -6,7 +6,7 @@ from work.estimate import eval_band_SVM
 from work.estimate import eval_band_KNN
 
 def evaluate_python (a, data_mat, labels_mat):
-   # 适用于python产生的index
+   # For the index by python
    data_mat_new = data_mat[:,a]
    num = 20
    acc_svm = 0
@@ -31,7 +31,7 @@ def evaluate_python (a, data_mat, labels_mat):
    print('kappa by knn:', kappa_knn)
 
 def evaluate_matlab (a, data_mat, labels_mat):
-   # 适用于matlab产生的index
+   # For the index by matlab
    a = a - np.ones_like(a)
    data_mat_new = data_mat[:,a]
    num = 20
