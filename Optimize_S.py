@@ -3,12 +3,9 @@ import math
 from scipy import optimize
 from work.function import fun
 
-def Optimize_S(X, W, Si, beta, gamma, alpha_k):
+def Optimize_S(X, W, Si, lamda2, lamda3, alpha_k):
 
-    '''
-    优化S
-    '''
-
+    # Make sure division makes sense
     eps = 0.0001
     mn, b = X.shape
     tmp_A = np.zeros([mn,mn,b])
@@ -18,13 +15,13 @@ def Optimize_S(X, W, Si, beta, gamma, alpha_k):
                 tmp_A[i,j] = X[i] - X[j]
                 tmp_A[j,i] = 0 - tmp_A[i,j]
     A = np.linalg.norm(tmp_A @ W, axis=2) ** 2
-    A = (beta / 2) * A                                              #提前乘好系数
+    A = (lamda2 / 2) * A                                              #提前乘好系数
 
     B = np.zeros([mn,mn])
     for i in range(mn):
         for j in range(mn):
             B[i,j] = np.sum((alpha_k[k] ** 2) * Si[k,i,j] for k in range(Si.shape[0]))
-    B = gamma * B                                                   #提前乘好系数
+    B = lamda3 * B                                                   #提前乘好系数
 
     S = np.zeros([mn,mn])
     for i in range(mn):
@@ -52,16 +49,3 @@ def Optimize_S(X, W, Si, beta, gamma, alpha_k):
                 S[i,nonzero_index] = B[i,nonzero_index] / (A[i,nonzero_index] + lamda)
     
     return S
-
-
-
-
-
-
-
-
-
-
-
-
-
