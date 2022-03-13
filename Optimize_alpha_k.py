@@ -3,6 +3,7 @@ import math
 
 def Optimize_alpha_k(Si, S):
 
+    # Make sure division makes sense
     eps = 0.0001
     mn = S.shape[0]
     K = Si.shape[0]
@@ -17,3 +18,4 @@ def Optimize_alpha_k(Si, S):
     alpha_k = np.array([(1 / C_k[k]) / tmp3 for k in range(K)])
 
     return alpha_k
+
