@@ -5,6 +5,7 @@ n_neighbors = 6;
 
 %% Call the generate_graphs function in Python
 Si = pyrunfile("generate_graphs.py", "Si", a = X, b = n_neighbors);
+% Convert Python data type back to Matlab type
 Si = double(Si);
 
 K = size(Si, 3);
