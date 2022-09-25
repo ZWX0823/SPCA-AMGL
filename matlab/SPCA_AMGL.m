@@ -4,7 +4,8 @@ function index = SPCA_AMGL(X, lambda1, lambda2, lambda3, d)
 n_neighbors = 6;
 
 %% Call the generate_graphs function in Python
-Si = py.generate_graphs.generate_graphs(X, n_neighbors);
+Si = pyrunfile("generate_graphs.py", "Si", a = X, b = n_neighbors);
+Si = double(Si);
 
 K = size(Si, 3);
 
@@ -15,17 +16,18 @@ W = orth(rand(b, d));
 S = sum(Si, 3);
 
 % Initial multigraph parameters
-alpha_k = ones([1, K]) / K;
+alpha = ones([1, K]) / K;
 
 iteration = 0;
 iter_max = 6;
 while iteration < iter_max
     % update W
-    W = Optimize_W(X, W, S, lambda1, lambda2);
+    W = optimize_W(X, W, S, lambda1, lambda2);
     % update S
-    S = Optimize_S(X, W, Si, lambda2, lambda3, alpha_k);
-    % update alpha_k
-    alpha_k = Optimize_alpha_k(S, Si);
+    S = optimize_S(X, W, Si, lambda2, lambda3, alpha);
+    % update alpha
+    alpha = optimize_alpha(S, Si);
+    iteration = iteration + 1;
 end
 
 %% Sort the bands, return the index of top d bands
