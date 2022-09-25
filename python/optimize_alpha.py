@@ -2,7 +2,7 @@
 import numpy as np
 import math
 
-def Optimize_alpha(S, Si):
+def optimize_alpha(S, Si):
 
     eps = 0.00001
     mn = S.shape[0]
