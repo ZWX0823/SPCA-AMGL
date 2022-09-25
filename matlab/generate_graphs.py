@@ -5,6 +5,7 @@ def generate_graphs(X, n_neighbors):
 
     K = 3   #相似度矩阵个数
     (n, b) = X.shape
+    Si = np.zeros([n,n,K])
     Si[:, :, 0] = rbf_kernel(X)
     Si[:, :, 1] = laplacian_kernel(X)
     Si[:, :, 2] = cosine_similarity(X)
@@ -24,3 +25,4 @@ def generate_graphs(X, n_neighbors):
     
     return Si
 
+Si = generate_graphs(a, b)
