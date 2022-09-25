@@ -1,9 +1,9 @@
 import numpy as np
 import math
 from numpy.random import rand
-from work.Optimize_W import Optimize_W
-from work.Optimize_S import Optimize_S
-from work.Optimize_alpha_k import Optimize_alpha_k
+from work.optimize_W import optimize_W
+from work.optimize_S import optimize_S
+from work.optimize_alpha_k import optimize_alpha_k
 from work.generate_graphs import generate_graphs
 from work.preprocessing import *
 from work.evaluate import *
@@ -35,8 +35,8 @@ def SPCA_AMGL(X, lamda1, lamda2, lamda3, d):
     S = np.sum(Si, axis=0) / K
 
     #初始化多图系数   
-    alpha_k = np.ones(K)
-    alpha_k = alpha_k / K
+    alpha = np.ones(K)
+    alpha = alpha / K
     
     iteration = 0
     iter_max = 6
@@ -44,19 +44,19 @@ def SPCA_AMGL(X, lamda1, lamda2, lamda3, d):
     while iteration < iter_max:
         
         # update W
-        W = Optimize_W(X, W, S, lamda1, lamda2, 1)
+        W = optimize_W(X, W, S, lamda1, lamda2, 1)
         print(W.shape)
         # update S
-        S = Optimize_S(X, W, Si, lamda2, lamda3, alpha_k)
+        S = optimize_S(X, W, Si, lamda2, lamda3, alpha)
     
-        # update alpha_k
-        alpha_k = Optimize_alpha(S, Si)
+        # update alpha
+        alpha = optimize_alpha(S, Si)
         
         # object function value
         SS = np.zeros(K)
         for k in range(K):
             index = np.where((Si[k] > 0) & (S > 0))
-            SS[k] = (alpha_k[k] ** 2) * (np.sum(Si[k][index] * np.log(Si[k][index])) - np.sum(Si[k][index] * np.log(S[index])))
+            SS[k] = (alpha[k] ** 2) * (np.sum(Si[k][index] * np.log(Si[k][index])) - np.sum(Si[k][index] * np.log(S[index])))
             
         D = 0.5 * np.diag(np.sum(S, axis=1) + np.sum(S, axis=0))
         L = D - 0.5 * (S + S.T)
