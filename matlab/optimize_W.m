@@ -1,7 +1,7 @@
 function W = optimize_W(X, W, S, lambda1, lambda2)
 
 [n, b] = size(X);
-D = 0.5 * (diag(sum(X,1)) + diag(sum(X,2)));
+D = 0.5 * (diag(sum(S,1)) + diag(sum(S,2)));
 L = D - 0.5 * (S + S');
 Q = zeros(b,b);
 for i = 1:b
