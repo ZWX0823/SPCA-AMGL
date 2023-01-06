@@ -45,7 +45,7 @@ def SPCA_AMGL(X, lamda1, lamda2, lamda3, d):
         
         # update W
         W = optimize_W(X, W, S, lamda1, lamda2, 1)
-        print(W.shape)
+        
         # update S
         S = optimize_S(X, W, Si, lamda2, lamda3, alpha)
     
