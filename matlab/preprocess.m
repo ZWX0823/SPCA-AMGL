@@ -28,6 +28,9 @@ data_mat = permute(data_mat, [2,1]);
 data_mat = normalize(data_mat, "norm");
 % permute to size(n_sample, n_feature)
 data_mat = permute(data_mat, [2,1]);
+[~, b] = size(data_mat);
+for i = 1 : b
+    data_mat(:, i) = data_mat(:, i) - mean(data_mat(:, i));
 end
 
 
