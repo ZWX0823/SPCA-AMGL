@@ -45,6 +45,8 @@ def data_preprocess(data_path, label_path, W, H):
 
     X = normalize(X)
     n, b = X.shape
+    for i in range(b):
+        X[:, i] = X[:, i] - np.mean(X[:, i])
     
     return X, y
 
